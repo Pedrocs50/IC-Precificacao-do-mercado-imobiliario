@@ -1,6 +1,7 @@
 from src.leitor_csv import LeitorCsv
 from src.analise_dados import AnaliseDados
-from src.yield_calculator import Yield  
+from src.yield_calculator import Yield
+# from src.heatmap import MapaCorrelacao
 
 def menu_colunas():
     opcoes_colunas = {
@@ -39,6 +40,7 @@ def main():
         print("\nMenu:")
         print("1. Visualizar gráfico de preços")
         print("2. Calcular e visualizar gráfico de Yield")
+        # print("3. Gerar mapa de correlação")
         print("3. Sair")
 
         opcao = input("Escolha uma opção (1-3): ")
@@ -62,9 +64,14 @@ def main():
             yield_calc = Yield(df, aluguel_col, venda_col)
             yield_calc.calcular_yield()
 
+        # elif opcao == "3":
+        #     print("\nMapa de Correlação")
+        #     MapaCorrelacao(df)
+
         elif opcao == "3":
             print("Saindo do programa. Até mais!")
             break
+
         else:
             print("Opção inválida. Tente novamente.")
 
