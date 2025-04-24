@@ -1,13 +1,9 @@
 from src.leitor_csv import LeitorCsv
 from src.analise_dados import AnaliseDados
+from src.yield_calculator import Yield  
 
-def main():
-    leitor = LeitorCsv("data/processed/Preço-venda-aluguel.csv")
-    df = leitor.ler()
-
-    print("\nGRÁFICO DE PREÇOS DE VENDAAS E  ALUGUEIS POR METRO QUADRADO (R$/m²)")
-    print("POSSÍVEIS COLUNAS A SEREM AVALIADA:")
-    opcoes_colunas =  {
+def menu_colunas():
+    opcoes_colunas = {
         1: 'venda',
         2: 'venda_1D',
         3: 'venda_2D',
@@ -25,20 +21,52 @@ def main():
 
     while True:
         try:
-            escolha = int(input("\nQual coluna gostaria de visualizar? (1-10): "))
+            escolha = int(input("\nEscolha uma coluna (1-10): "))
             if escolha in opcoes_colunas:
-                coluna_avaliar = opcoes_colunas[escolha]
-                break
+                return opcoes_colunas[escolha]
             else:
-                print("Digite um número entre 1 e 10: ")
-
+                print("Digite um número entre 1 e 10.")
         except ValueError:
-            print("Por favor, digite um número válido.")
+            print("Entrada inválida. Digite um número.")
 
-    print(f"Você escolheu a coluna: {coluna_avaliar}")
+def main():
+    leitor = LeitorCsv("data/processed/Preço-venda-aluguel.csv")
+    df = leitor.ler()
 
-    analise = AnaliseDados(df)
-    analise.criar_grafico(coluna_avaliar)
+    print("SISTEMA DE PRECIFICAÇÃO DO MERCADO IMOBILIÁRIO")
+
+    while True:
+        print("\nMenu:")
+        print("1. Visualizar gráfico de preços")
+        print("2. Calcular e visualizar gráfico de Yield")
+        print("3. Sair")
+
+        opcao = input("Escolha uma opção (1-3): ")
+
+        if opcao == "1":
+            print("\nGráfico de preços de venda e aluguel por m²")
+            print("Escolha a coluna que deseja visualizar:")
+            coluna = menu_colunas()
+            print(f"Você escolheu a coluna: {coluna}")
+            analise = AnaliseDados(df)
+            analise.criar_grafico(coluna)
+
+        elif opcao == "2":
+            print("\nCálculo do Yield")
+            print("Escolha a coluna de ALUGUEL:")
+            aluguel_col = menu_colunas()
+
+            print("\nEscolha a coluna de VENDA:")
+            venda_col = menu_colunas()
+
+            yield_calc = Yield(df, aluguel_col, venda_col)
+            yield_calc.calcular_yield()
+
+        elif opcao == "3":
+            print("Saindo do programa. Até mais!")
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
 
 if __name__ == "__main__":
     main()

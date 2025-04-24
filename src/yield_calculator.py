@@ -22,7 +22,7 @@ class Yield:
         self._df['aluguel_anual'] = self._df[self.aluguel_coluna] * 12
 
         # CALCULANDO O YIELD
-        self._df['aluguel'] = self._df['alguel_anual'] / self._df[self.venda_coluna] / 10 # GAMBIARRA, OU SEJA, TENHO QUE AJUSTAS OS DADOS, OU MELHORAR A FORMA DE CHAMRA OS DADOS NO ARQUIVO EXCEL.
+        self._df['yield'] = self._df['aluguel_anual'] / self._df[self.venda_coluna] / 10 # GAMBIARRA, OU SEJA, TENHO QUE AJUSTAS OS DADOS, OU MELHORAR A FORMA DE CHAMRA OS DADOS NO ARQUIVO EXCEL.
 
         print(f"Coluna de venda escolhida: {self.venda_coluna}")
         print(f"Coluna de venda escolhida: {self.aluguel_coluna}")
@@ -39,5 +39,4 @@ class Yield:
 
         mplcursors.cursor(hover=True)
 
-        # exibe o gráfico
         plt.show()
